@@ -1,0 +1,17 @@
+
+
+
+td, th{
+    text-align: center;
+}
+
+.contenido{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+table{
+    margin: 10px;
+    
+}
