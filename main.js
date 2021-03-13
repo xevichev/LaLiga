@@ -1,11 +1,10 @@
 function tabla(partidos){
 
-
+    let filainjection = document.getElementById("tabla");
+    filainjection.innerHTML="";
     
-    for (let i = 0; i < partidos.length; i++) {
-
-        let filainjection = document.getElementById("tabla");
-       
+    for (let i = 0; i < partidos.length; i++) {             
+      
         let nuevafila = document.createElement("tr");
 
         //-----jornada------
@@ -53,45 +52,67 @@ function tabla(partidos){
     }
  
 }
+
 tabla(data.matches);
 
-let nombre=document.querySelector("#Equipo").value;
+
+
+
+
+
+//-----Con--Enter------
+
+// nombre.addEventListener('keypress', function (e) {
+//     if (e.KeyCode=== 13) {
+
+//         console.log(e.target.value);
+        
+//     }
+// });
+
     
-console.log(nombre);
+
+
 
 
 //.........primerintentodefiltro..........
 
-function filtro() {
+function filtro(partidos) {
 
     let nombre=document.querySelector("#Equipo").value;
-    
+
+    nombre=nombre.toLowerCase();
+
     console.log(nombre);
-
-    // for (let i = 0; i < partidos.length; i++) {
-       
-    //     if (nombre!=partidos[i].homeTeam.name || partidos[i].awayTeam.name) {
-
-    //         borrar=partidos.splice(i,1)
-
-    //         i=i-1
-            
-    //     }
-    // }
-    
-    // tabla(partidos)
-}
-
-//.........segundointentodeflitro.............
-
-function filtronombre(nombre, partidos) {
-
-    for (let i = 0; i < partidos.length; i++) {
-    
-        if (nombre==partidos[i].homeTeam.name || partidos[i].awayTeam.name) {
-
-            
-        }
+  
+    if (nombre==""){
+        tabla(partidos);
     }
+
+    else {
+
+    let equipoSeleccionado=[];
     
+    for (let i = 0; i < partidos.length; i++) {
+              
+        if (partidos[i].homeTeam.name.toLowerCase().indexOf(nombre) > -1 || partidos[i].awayTeam.name.toLowerCase().indexOf(nombre) > -1) {
+
+            equipoSeleccionado.push(partidos[i]);
+        }              
+
+        
+        
+    }
+    console.log(equipoSeleccionado)
+    
+    if (equipoSeleccionado.length == 0) {
+        
+        console.log("no hay coincidencias");
+    }
+    else {
+    tabla(equipoSeleccionado);
+    }
+  
+    }
 }
+
