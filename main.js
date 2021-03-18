@@ -82,7 +82,8 @@ function filtro(partidos) {
     let nombre=document.querySelector("#Equipo").value;
 
     nombre=nombre.toLowerCase();
-
+    
+    nombre.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
     console.log(nombre);
   
     if (nombre==""){
@@ -95,7 +96,7 @@ function filtro(partidos) {
     
     for (let i = 0; i < partidos.length; i++) {
               
-        if (partidos[i].homeTeam.name.toLowerCase().indexOf(nombre) > -1 || partidos[i].awayTeam.name.toLowerCase().indexOf(nombre) > -1) {
+        if (partidos[i].homeTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1 || partidos[i].awayTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1) {
 
             equipoSeleccionado.push(partidos[i]);
         }              
@@ -104,15 +105,55 @@ function filtro(partidos) {
         
     }
     console.log(equipoSeleccionado)
+
+    
     
     if (equipoSeleccionado.length == 0) {
         
         console.log("no hay coincidencias");
     }
+    
     else {
-    tabla(equipoSeleccionado);
+        let valorradio=document.form.filtropartidos.value;
+        console.log(valorradio);
+        
+        if (valorradio=="todos"){
+            tabla(equipoSeleccionado);}
+
+        else if (valorradio=="Ganados") {
+
+            let esGanados=[];
+            for (let j = 0; j < equipoSeleccionado.length; j++) {
+        
+            if (equipoSeleccionado[j].score.winner=="HOME_TEAM" && equipoSeleccionado[j].homeTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1 || equipoSeleccionado[j].score.winner=="AWAY_TEAM" && equipoSeleccionado[j].awayTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1) 
+        
+            esGanados.push(equipoSeleccionado[j]);}
+
+            tabla(esGanados);
+            
+        }
+       
+        else if (valorradio=="empate"){
+            let esEmpate=[];
+            for (let k = 0; k < equipoSeleccionado.length; k++) {
+            
+            if (equipoSeleccionado[k].score.winner=="DRAW"){
+
+            esEmpate.push(equipoSeleccionado[k]);}}
+            
+            console.log(esEmpate);
+            
+
+            tabla(esEmpate);
+                
+            
+        }
     }
-  
+   
     }
+
+    
+    
 }
+
 
