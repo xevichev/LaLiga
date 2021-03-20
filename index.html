@@ -40,32 +40,48 @@
     </h1>
     <form name="form">
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="Equipo" onkeyup="filtro(data.matches)" placeholder="Buscar" >
-        <label for="Equipo">Equipo</label>
+        
+        
+        <input type="text" class="form-control" id="Equipo" placeholder="Buscar Equipo" >  
+        <label for="Equipo">Equipo</label>      
+
+        <div class="buscador" class="divbutton">
+        <button type="button" id="buscar" class="btn btn-outline-danger" onclick="getDataMatches()">Buscar</button>
+
+        </div>
+        <div class="radios">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="filtropartidos" id="todoslospartidos" value="todos" onclick="filtro(data.matches)" checked>
+          <input class="form-check-input" type="radio" name="filtropartidos" id="todoslospartidos" value="todos" onclick="getDataMatches()" checked>
           <label class="form-check-label" for="todoslospartidos">
             Todos
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="filtropartidos" id="flexRadioDefault1"value="Ganados" onclick="filtro(data.matches)">
+          <input class="form-check-input" type="radio" name="filtropartidos" id="flexRadioDefault1"value="Ganados" onclick="getDataMatches()">
           <label class="form-check-label" for="flexRadioDefault1">
             Ganados
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="filtropartidos" id="flexRadioDefault1"value="empate" onclick="filtro(data.matches)">
+          <input class="form-check-input" type="radio" name="filtropartidos" id="flexRadioDefault1"value="empate" onclick="getDataMatches()">
           <label class="form-check-label" for="flexRadioDefault1">
             Empatados
           </label>
         </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="filtropartidos" id="flexRadioDefault1"value="perdido" onclick="getDataMatches()">
+          <label class="form-check-label" for="flexRadioDefault1">
+            Perdidos
+          </label>
+        </div>
+        </div>
         
       </div>
     </form>
-    <table class="table table-success">
-        <thead>
-            <tr>
+    <div id="tablatotal">
+    <table name="tablareal" id="tablareal"class="table table-success">
+        <thead id="encabezado">
+            <tr id="thead">
                 <th>Jornada</th>
                 <th>Local</th>
                 <th>Resultado</th>                               
@@ -75,11 +91,10 @@
         <tbody id="tabla">
         </tbody>
     </table>
+  </div>
   </section>
     
-    <script src="/getdataAPI.js"></script>
-    <script src="/main.js"></script>
-    
-    <!-- <script src="/pruebajs.js"></script> -->
+    <!-- <script src="/getdataAPI.js"></script> -->
+    <script src="/main.js"></script>    
 </body>
 </html>

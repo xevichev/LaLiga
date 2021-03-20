@@ -93,8 +93,6 @@ function porcentajeempates(partidos) {
 
 }
 
-porcentajeempates(data.matches);
-
 
 
 
@@ -215,6 +213,7 @@ function decididosSegundaParte(partidos) {
     stat4.innerHTML="Porcentaje de partidos decididos en la segunda mitad: "+ resultado + "%";
 
     estadisticainjection.append(stat4);
+    stat4.classList.add('prueba');
 }
 
 
@@ -226,9 +225,9 @@ porcentajeGanadosCasa(data.matches);
 
 porcentajeGanadosFuera(data.matches);
 
-
+porcentajeempates(data.matches);
 
 decididosSegundaParte(data.matches);
 
-li.classList.add('list-group-item');
+
 

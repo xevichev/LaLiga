@@ -1,4 +1,26 @@
-console.log(dataclas.standings[0])
+function getData() {
+    const url = "https://api.football-data.org/v2/competitions/2014/standings";
+    fetch(url, {
+        method: "GET",
+        headers:{
+            "X-Auth-Token":"fbe655ab381042ac8db7deb5af649ec9"
+        }
+
+    }).then(respone => {
+        if(respone.ok) return respone.json();
+    }).then(data=>{
+        console.log(data);
+
+        clasficacion(data.standings[0].table);
+    })
+    
+};
+
+
+getData();
+
+
+
 
 
 function clasficacion(tabladeposiciones) {
@@ -23,14 +45,14 @@ function clasficacion(tabladeposiciones) {
 
     row.append(nuevoequipo);
     //-----escudo----
-    let escudo=document.createElement("td");
+    // let escudo=document.createElement("td");
     
-    let imagen=document.createElement("img");
+    // let imagen=document.createElement("img");
 
-    escudo.append(imagen);
-    imagen.setAttribute("scr",tabladeposiciones[i].team.crestUrl)
+    // escudo.append(imagen);
+    // imagen.setAttribute("scr",tabladeposiciones[i].team.crestUrl)
 
-    row.append(escudo);
+    // row.append(escudo);
     
     //---puntos-----
     let nuevospuntos=document.createElement("td");
@@ -50,5 +72,5 @@ function clasficacion(tabladeposiciones) {
     }
            
 }
-clasficacion(dataclas.standings[0].table);
+
 

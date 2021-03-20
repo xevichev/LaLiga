@@ -15,3 +15,22 @@ table{
     margin: 10px;
     
 }
+
+.buscador{
+    margin:10px;
+}
+
+.prueba{
+    background-color: red;
+}
+
+.mostrar{
+    display: table-row-group;
+}
+.nomostrar{
+    display: none;
+}
+.radios{
+    display: flex;
+    justify-content: space-around;
+}

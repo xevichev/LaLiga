@@ -1,4 +1,32 @@
+function getDataMatches() {
+    const url = "https://api.football-data.org/v2/competitions/2014/matches";
+    fetch(url, {
+        method: "GET",
+        headers:{
+            "X-Auth-Token":"fbe655ab381042ac8db7deb5af649ec9"
+        }
+
+    }).then(respone => {
+        if(respone.ok) return respone.json();
+    }).then(data=>{
+        console.log(data);
+
+        filtro(data.matches);
+    })
+    
+};
+
+
+getDataMatches();
+
+
+
+
+
+
 function tabla(partidos){
+
+    match();
 
     let filainjection = document.getElementById("tabla");
     filainjection.innerHTML="";
@@ -48,12 +76,16 @@ function tabla(partidos){
         nuevafila.append(nuevovisitante);
 
         filainjection.append(nuevafila);
+
+       
                 
     }
+
+    
  
 }
 
-tabla(data.matches);
+
 
 
 
@@ -72,12 +104,11 @@ tabla(data.matches);
 
     
 
-
-
-
 //.........primerintentodefiltro..........
 
 function filtro(partidos) {
+
+    match();
 
     let nombre=document.querySelector("#Equipo").value;
 
@@ -85,6 +116,12 @@ function filtro(partidos) {
     
     nombre.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
     console.log(nombre);
+
+    if (nombre=="barça" || nombre=="barç"){
+
+        nombre="barcelona";
+    }
+
   
     if (nombre==""){
         tabla(partidos);
@@ -92,9 +129,9 @@ function filtro(partidos) {
 
     else {
 
-    let equipoSeleccionado=[];
+        let equipoSeleccionado=[];
     
-    for (let i = 0; i < partidos.length; i++) {
+        for (let i = 0; i < partidos.length; i++) {
               
         if (partidos[i].homeTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1 || partidos[i].awayTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1) {
 
@@ -103,24 +140,28 @@ function filtro(partidos) {
 
         
         
-    }
-    console.log(equipoSeleccionado)
+        }
+        console.log(equipoSeleccionado)          
+        
+        
 
+        if (equipoSeleccionado.length == 0) {   
+            
+            nomatch();
+                        
+            console.log("No hay coincidencias");
+        }
     
-    
-    if (equipoSeleccionado.length == 0) {
+        else {
+                         
+            let valorradio=document.form.filtropartidos.value;
+            console.log(valorradio);
         
-        console.log("no hay coincidencias");
-    }
-    
-    else {
-        let valorradio=document.form.filtropartidos.value;
-        console.log(valorradio);
-        
-        if (valorradio=="todos"){
+            if (valorradio=="todos"){
+                
             tabla(equipoSeleccionado);}
 
-        else if (valorradio=="Ganados") {
+            else if (valorradio=="Ganados") {
 
             let esGanados=[];
             for (let j = 0; j < equipoSeleccionado.length; j++) {
@@ -131,15 +172,16 @@ function filtro(partidos) {
 
             tabla(esGanados);
             
-        }
+            }
        
-        else if (valorradio=="empate"){
+            else if (valorradio=="empate"){
             let esEmpate=[];
             for (let k = 0; k < equipoSeleccionado.length; k++) {
             
             if (equipoSeleccionado[k].score.winner=="DRAW"){
 
-            esEmpate.push(equipoSeleccionado[k]);}}
+            esEmpate.push(equipoSeleccionado[k]);}
+            }
             
             console.log(esEmpate);
             
@@ -147,7 +189,20 @@ function filtro(partidos) {
             tabla(esEmpate);
                 
             
-        }
+            }
+
+            else if(valorradio=="perdido"){
+            let esPerdido=[];
+
+                for (let g = 0; g < equipoSeleccionado.length; g++) {
+                
+                if (equipoSeleccionado[g].score.winner=="AWAY_TEAM" && equipoSeleccionado[g].homeTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1 || equipoSeleccionado[g].score.winner=="HOME_TEAM" && equipoSeleccionado[g].awayTeam.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"").indexOf(nombre) > -1){ 
+
+                esPerdido.push(equipoSeleccionado[g]);}
+            }
+
+                tabla(esPerdido);
+            }
     }
    
     }
@@ -156,4 +211,26 @@ function filtro(partidos) {
     
 }
 
+function nomatch() {
 
+    
+    let nhc=document.getElementById("encabezado");
+    nhc.classList.add("nomostrar");
+
+    let tablatotal=document.getElementById("tabla");
+    tablatotal.innerHTML="";
+    let mnhc=document.createElement("tr");
+    mnhc.innerHTML="No hay coincidencias";
+
+    tablatotal.append(mnhc);
+    
+}
+
+function match() {
+    let resetencabezado=document.getElementById("encabezado");
+    resetencabezado.classList.add("mostrar");
+
+    
+    
+    
+}
