@@ -34,3 +34,7 @@ table{
     display: flex;
     justify-content: space-around;
 }
+
+.logoescudo{
+    width: 40px;
+}

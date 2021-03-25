@@ -26,7 +26,7 @@ getDataMatches();
 
 function tabla(partidos){
 
-    match();
+   
 
     let filainjection = document.getElementById("tabla");
     filainjection.innerHTML="";
@@ -45,10 +45,11 @@ function tabla(partidos){
         //------------------local---------------       
         
         let nuevolocal=document.createElement("td");
-        nuevolocal.innerHTML=`${partidos[i].homeTeam.name}` ;
-        // let escudolocal=document.createElement("img");
-        // escudolocal.setAttribute("scr",partidos[i].team.crestUrl);
-        // nuevolocal.append(escudolocal);
+        let imagen=document.createElement("img");
+        imagen.setAttribute("src", `https://crests.football-data.org/${partidos[i].homeTeam.id}.svg`);
+        nuevolocal.append(partidos[i].homeTeam.name,imagen)                  
+    
+        imagen.classList.add("logoescudo");
         
         nuevafila.append(nuevolocal);
 
@@ -71,7 +72,12 @@ function tabla(partidos){
       
 
         let nuevovisitante=document.createElement("td");
-        nuevovisitante.innerHTML=`${partidos[i].awayTeam.name}`;
+        let imagen2=document.createElement("img");
+        imagen2.setAttribute("src", `https://crests.football-data.org/${partidos[i].awayTeam.id}.svg`);
+        nuevovisitante.append(partidos[i].awayTeam.name,imagen2)                  
+    
+        imagen2.classList.add("logoescudo");
+
 
         nuevafila.append(nuevovisitante);
 
@@ -106,9 +112,17 @@ function tabla(partidos){
 
 //.........primerintentodefiltro..........
 
+let filtrarporequipo= document.querySelector("#Equipo");
+
+filtrarporequipo.addEventListener("keydown",function(e){
+    if (e.keyCode==13) {filtro(data.matches)}
+        
+    });
+
+
 function filtro(partidos) {
 
-    match();
+    
 
     let nombre=document.querySelector("#Equipo").value;
 
@@ -125,6 +139,9 @@ function filtro(partidos) {
   
     if (nombre==""){
         tabla(partidos);
+        let ocultarradios=document.getElementById("radios");
+    
+        ocultarradios.classList.add("nomostrar");
     }
 
     else {
@@ -147,7 +164,7 @@ function filtro(partidos) {
 
         if (equipoSeleccionado.length == 0) {   
             
-            nomatch();
+          
                         
             console.log("No hay coincidencias");
         }
@@ -211,26 +228,33 @@ function filtro(partidos) {
     
 }
 
-function nomatch() {
+// function nomatch() {
 
     
-    let nhc=document.getElementById("encabezado");
-    nhc.classList.add("nomostrar");
+//     let nhc=document.getElementById("encabezado");
+//     nhc.classList.add("nomostrar");
 
-    let tablatotal=document.getElementById("tabla");
-    tablatotal.innerHTML="";
-    let mnhc=document.createElement("tr");
-    mnhc.innerHTML="No hay coincidencias";
+//     let tablatotal=document.getElementById("tabla");
+//     tablatotal.innerHTML="";
+//     let mnhc=document.createElement("tr");
+//     mnhc.innerHTML="No hay coincidencias";
 
-    tablatotal.append(mnhc);
+//     tablatotal.append(mnhc);
     
-}
+// }
 
-function match() {
-    let resetencabezado=document.getElementById("encabezado");
-    resetencabezado.classList.add("mostrar");
+// function match() {
+//     let resetencabezado=document.getElementById("encabezado");
+//     resetencabezado.classList.replace("mostrar");
 
     
     
     
+//}
+
+function ocultarradios() {
+
+    let ocultarradios=document.getElementById("radios");
+    
+    ocultarradios.classList.add("nomostrar");
 }
